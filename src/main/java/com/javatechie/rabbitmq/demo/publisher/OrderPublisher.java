@@ -22,7 +22,8 @@ public class OrderPublisher {
         //restaurantservice
         //payment service
         OrderStatus orderStatus = new OrderStatus(order, "PROCESS", "order placed succesfully in " + restaurantName);
-        template.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, orderStatus);
+        //template.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, orderStatus);
+        template.convertAndSend("testExchange", "test_routing", orderStatus);
         return "Success !!";
     }
 }
