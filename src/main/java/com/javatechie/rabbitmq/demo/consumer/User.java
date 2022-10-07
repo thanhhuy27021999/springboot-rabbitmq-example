@@ -11,6 +11,6 @@ public class User {
 //    @RabbitListener(queues = MessagingConfig.QUEUE)
 @RabbitListener(queues = "test")
     public void consumeMessageFromQueue(OrderStatus orderStatus) {
-        System.out.println("Message recieved from queue : " + orderStatus);
+        System.out.println("Message recieved from queue : " + System.currentTimeMillis() +" " + orderStatus);
     }
 }

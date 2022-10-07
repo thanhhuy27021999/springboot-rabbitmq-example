@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Configuration
 public class MessagingConfig {
@@ -23,14 +24,24 @@ public class MessagingConfig {
 
     @Bean
     public Queue queue() {
-        return new Queue(QUEUE);
+        Map<String, Object> args = new HashMap<>();
+        args.put("x-dead-letter-exchange","");
+        args.put("x-dead-letter-routing-key","test");
+        args.put("x-message-ttl", 7000);
+        Queue queue = new Queue("testDelayTemp", true, false, false,args );
+        return queue;
     }
 
     @Bean
+    public Queue desQuee() {
+        return new Queue("test");
+    }
+    @Bean
     public CustomExchange exchange() {
-        Map<String, Object> args = new HashMap<>();
-        args.put("x-delayed-type", "direct");
-        return new CustomExchange("DELAY_TEST_EXCHANGE", "x-delayed-message", true, false, args);
+//        Map<String, Object> args = new HashMap<>();
+//        args.put("x-delayed-type", "direct");
+//        return new CustomExchange("DELAY_TEST_EXCHANGE", "x-delayed-message", true, false, args);
+        return new CustomExchange("DELAY_TEST_EXCHANGE", "direct");
     }
 
     @Bean
